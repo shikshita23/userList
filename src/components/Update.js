@@ -1,23 +1,23 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Loader from "./Loader";
-import { useNavigate } from "react-router-dom";
-export default function CreateUser() {
-  const navigate = useNavigate();
+export default function Update() {
+  const { id } = useParams();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isSubmitting },
   } = useForm();
 
+  const navigate = useNavigate();
   const onSubmit = (data) => {
     console.log("data==>", data);
-    fetch(" http://localhost:8000/user", {
-      method: "POST",
+    fetch(` http://localhost:8000/user/${id}`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }).then((response) => {
       console.log("res>>>", response);
-      console.log("Successfully submitted");
+      console.log("Successfully Updated");
       navigate("/view");
     });
   };
@@ -98,7 +98,7 @@ export default function CreateUser() {
               className="bg-sky-200 px-5 py-2 rounded "
               disabled={isSubmitting}
             >
-              {isSubmitting ? <Loader></Loader> : "SUBMIT"}
+              UPDATE
             </button>
           </div>
         </form>
