@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ToastMsg from "./ToastProvider";
 export default function CreateUser() {
   const navigate = useNavigate();
   const {
@@ -9,9 +10,9 @@ export default function CreateUser() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm();
-  const notifyCreate = () => {
-    toast.success("Created Successfully", {
-      position: "top-left",
+  const notifyCreate = (msg) => {
+    toast.success(msg, {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -23,7 +24,7 @@ export default function CreateUser() {
         backgroundColor: "white",
       },
     });
-    navigate("/view");  //not working
+    // navigate("/view");  //not working
   };
   const onSubmit = (data) => {
     console.log("data==>", data);
@@ -33,8 +34,11 @@ export default function CreateUser() {
       body: JSON.stringify(data),
     }).then((response) => {
       if (response.ok) {
-        notifyCreate();
-        navigate("/view");
+        notifyCreate("created successfully");
+        setTimeout(() => {
+          
+          navigate("/view");
+        },3500);
         console.log("res>>>", response);
         console.log("Successfully submitted");
       }

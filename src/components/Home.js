@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Nav from "./Nav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ToastMsg from "./ToastProvider";
 export default function Home() {
   const [data, setData] = useState([]);
   const fetchData = async () => {
@@ -47,6 +48,7 @@ export default function Home() {
       .then(() => {
         fetchData();
         notifyDel();
+        
         console.log("Deleted successfully", id);
       })
       .catch((error) => console.error(error));
