@@ -1,14 +1,30 @@
 import { useForm } from "react-hook-form";
-import Loader from "./Loader";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function CreateUser() {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitted },
+    formState: { errors, isValid },
   } = useForm();
-
+  const notifyCreate = () => {
+    toast.success("Created Successfully", {
+      position: "top-left",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      style: {
+        backgroundColor: "white",
+      },
+    });
+    navigate("/view");  //not working
+  };
   const onSubmit = (data) => {
     console.log("data==>", data);
     fetch(" http://localhost:8000/user", {
@@ -16,16 +32,22 @@ export default function CreateUser() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }).then((response) => {
-      console.log("res>>>", response);
-      console.log("Successfully submitted");
-      navigate("/view");
+      if (response.ok) {
+        notifyCreate();
+        navigate("/view");
+        console.log("res>>>", response);
+        console.log("Successfully submitted");
+      }
     });
   };
   const onError = (errors) => {
     console.log("form Errors==>", errors);
   };
+  const hasErrors = Object.keys(errors).length > 0;
+  console.log("has errors", hasErrors);
   return (
     <>
+      {/* {isSubmitted?navigate("/view"):notifyCreate()} */}
       <div className="flex justify-center">
         <form
           className=" flex-col w-96 justify-between mt-20 p-10 bg-white"
@@ -96,13 +118,14 @@ export default function CreateUser() {
             <button
               type="submit"
               className="bg-sky-200 px-5 py-2 rounded "
-              disabled={isSubmitting}
+              disabled={!isValid}
             >
-              {isSubmitting ? <Loader></Loader> : "SUBMIT"}
+              SUBMIT
             </button>
           </div>
         </form>
       </div>
+      <ToastContainer />
     </>
   );
 }
