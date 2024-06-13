@@ -1,18 +1,27 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ToastMsg from "./ToastProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 export default function CreateUser() {
   const navigate = useNavigate();
+
+  //Destructuring 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm();
-  const notifyCreate = (msg) => {
-    toast.success(msg, {
-      position: "top-right",
+    } = useForm();
+    const {append,fields,remove}=useFieldArray({
+      control,
+      name:"experience"
+    })
+    const notifyCreate = (msg) => {
+      toast.success(msg, {
+        position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -51,10 +60,10 @@ export default function CreateUser() {
   console.log("has errors", hasErrors);
   return (
     <>
-      {/* {isSubmitted?navigate("/view"):notifyCreate()} */}
+      
       <div className="flex justify-center">
         <form
-          className=" flex-col w-96 justify-between mt-20 p-10 bg-white"
+          className=" flex-col w-96  mt-20 p-10 bg-white"
           onSubmit={handleSubmit(onSubmit, onError)}
         >
           <div className="flex flex-col bg-white">
@@ -99,7 +108,7 @@ export default function CreateUser() {
           </div>
           <br />
           <br />
-          <div className="flex flex-col justify-between bg-white">
+          <div className="flex flex-col  bg-white">
             <div className="flex justify-between bg-white">
               <label className="bg-white">Address</label>
               <input
@@ -118,6 +127,57 @@ export default function CreateUser() {
               </div>
             )}
           </div>
+          <br/><br/>
+          <div className="flex flex-col justify-between bg-white">
+            <div className="flex flex-col bg-white">
+              <div className="flex justify-between"> 
+
+              <label className="bg-white">Experience</label>
+              <FontAwesomeIcon icon={faPlus} className="cursor-pointer me-2 ms-2 mt-1" onClick={()=>append({experience:""})} />
+              
+              {/* <input type="text" name="experience" className="bg-white border-2 rounded border-black"  {...register("experience.experience[0]", {
+                      required: "experience is reqquired",
+                    })}></input> */}
+              </div>
+              <br/>
+              <div className="flex flex-col">
+
+              {fields.map((item,index)=>(
+                <>
+
+                  <div key={item.id} className="flex justify-end">
+               
+                  
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="cursor-pointer me-4" onClick={()=>remove(index)}
+                  
+                />
+                  <input
+                    name={`experience[${index}].experience`}
+                    type="text"
+                    defaultValue={item.experience}
+                    className="bg-white border-2 rounded border-black"
+                    {...register(`experience[${index}].experience`)}
+
+                  />
+                   
+                  </div>
+                  <br/>
+                </>
+              
+                  ))}
+              </div>
+            </div>
+            <br/><br/>
+            
+            {errors.experience && (
+              <div className="bg-white flex mt-3 text-red-500 justify-end">
+                {errors.experience.message}
+              </div>
+            )}
+          </div>
+          
           <div className="bg-white mt-10  flex justify-center">
             <button
               type="submit"

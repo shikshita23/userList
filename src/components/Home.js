@@ -57,11 +57,12 @@ export default function Home() {
     <>
       <Nav></Nav>
 
-      <div className="grid grid-cols-6 border-2 border-black tableSize mt-12 mx-auto bg-white ">
+      <div className="grid grid-cols-7 border-2 border-black tableSize mt-12 mx-auto bg-white ">
         <div className="borderElement bg-sky-100">ID</div>
         <div className="borderElement bg-sky-100">Name</div>
         <div className="borderElement bg-sky-100">Username</div>
         <div className="borderElement start bg-sky-100 ">Address</div>
+        <div className="borderElement start bg-sky-100 ">Experience</div>
         <div className="borderElement col-span-2 start bg-sky-100 ">Action</div>
         {data.map((user) => {
           return (
@@ -71,6 +72,21 @@ export default function Home() {
               <div className="borderElement">{user.name}</div>
               <div className="borderElement">{user.username}</div>
               <div className="borderElement"> {user.address}</div>
+              <div className="border-y-[1px] border-black flex flex-col ">
+
+              {user?.experience?.map((item)=>
+              {
+                console.log("exp>>",item)
+                return(
+                  (    
+
+                     <li className="list-none "> {item.experience}</li>
+                   
+                
+                )
+                )
+              })}
+              </div>
               <div className="borderElement ">
                 {" "}
                 <Link to={`/edit/${user.id}`}>

@@ -1,82 +1,57 @@
 {
   "user": [
     {
-      "name": "fnskjhgsd",
-      "username": "wensad",
-      "address": "wfnsasd",
-      "id": "d00e"
+      "id": "22a2",
+      "name": "Shikshita",
+      "username": "shiks123",
+      "address": "koteshwor",
+      "experience": [
+        {
+          "experience": "frontend developer"
+        }
+      ]
     },
     {
-      "name": "fsldf",
-      "username": "fsk",
-      "address": "fdsg",
-      "id": "1e5b"
-    },
-    {
-      "name": "fsss",
-      "username": "dsf",
-      "address": "sf",
-      "id": "e1e5"
-    },
-    {
-      "id": "f514",
-      "name": "sdsad",
-      "username": "das",
-      "address": "dsf"
-    },
-    {
-      "id": "c9a4",
+      "id": "8e4c",
       "name": "ram",
-      "username": "ram123",
-      "address": "koteshwor"
+      "username": "ram13",
+      "address": "bhaktapur",
+      "experience": [
+        {
+          "experience": "backend intern"
+        }
+      ]
     },
     {
-      "id": "bf5d",
-      "name": "gita",
-      "username": "gita124",
-      "address": "feef"
+      "id": "5fa8",
+      "name": "dsf",
+      "username": "fdf",
+      "address": "dfd",
+      "experience": [
+        {
+          "experience": "111"
+        },
+        {
+          "experience": "222"
+        },
+        {
+          "experience": "3333"
+        }
+      ]
     },
     {
-      "id": "4e45",
-      "name": "gdfs",
-      "username": "dsfdsf",
-      "address": "fsdf"
-    },
-    {
-      "id": "59dc",
-      "name": "afs",
-      "username": "bh",
-      "address": "gjh"
-    },
-    {
-      "id": "bd3b",
-      "name": "fsd",
-      "username": "njkdsf",
-      "address": "hkd"
-    },
-    {
-      "id": "2f91",
-      "name": "ds",
-      "username": "fd",
-      "address": "fds"
-    },
-    {
-      "id": "eaf9",
-      "name": "kn",
-      "username": "jlk",
-      "address": "hkj"
-    },
-    {
-      "id": "309b",
-      "name": "kn",
-      "username": "jlk",
-      "address": "hkjsad"
-    },
-    {
-      "id": "0768",
-      "name": "hfdh",
-      "username": "haei",
-      "address": "hikf"
+      "id": "e81d",
+      "name": "Hari",
+      "username": "Hari1234",
+      "address": "Ekantakuna",
+      "experience": [
+        {
+          "experience": "QA"
+        },
+        {
+          "experience": "Developer"
+        }
+      ]
     }
   ]
 }
