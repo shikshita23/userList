@@ -136,16 +136,16 @@ export default function CreateUser() {
               <FontAwesomeIcon icon={faPlus} className="cursor-pointer me-2 ms-2 mt-1" onClick={()=>append({experience:""})} />
               </div>
               <br/>
-              <div className="flex flex-col">
+              <div className="flex flex-col ">
 
               {fields.map((item,index)=>(
                 <>
                   {console.log("fields==>",fields)}
                   <div key={item.id} className="flex justify-end">       
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                   icon={faTrash}
                   className="cursor-pointer me-4" onClick={()=>remove(index)}
-                />
+                /> */}
                   <input
                     name={`experience[${index}].experience`}
                     type="text"
@@ -156,19 +156,16 @@ export default function CreateUser() {
                   </div>
                   <br/>
                 </>
-              
                   ))}
               </div>
             </div>
             <br/><br/>
-            
             {errors.experience && (
               <div className="bg-white flex mt-3 text-red-500 justify-end">
                 {errors.experience.message}
               </div>
             )}
           </div>
-          
           <div className="bg-white mt-10  flex justify-center">
             <button
               type="submit"
