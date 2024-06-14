@@ -38,20 +38,6 @@
           "experience": "3333"
         }
       ]
-    },
-    {
-      "id": "e81d",
-      "name": "Hari",
-      "username": "Hari1234",
-      "address": "Ekantakuna",
-      "experience": [
-        {
-          "experience": "QA"
-        },
-        {
-          "experience": "Developer"
-        }
-      ]
     }
   ]
 }

@@ -8,10 +8,14 @@ export default function Update() {
   const [userData, setUserData] = useState(null);
   const { id } = useParams();
   const {
+    control,
     register,
+    setValue,
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm();
+
+
   const notifyUpdate = () => {
     toast.success("Updated Successfully", {
       position: "top-right",
@@ -46,17 +50,30 @@ export default function Update() {
         const userData = await response.json();
         setUserData(userData);
         console.log("userData==>", userData);
-      } catch (error) {
+        setValue('name',userData.name);
+        setValue('username',userData.username);
+        setValue('address',userData.address);
+        userData.experience.map((experience, index) => {
+          setValue(`experience[${index}]`, experience.experience);
+        });
+        } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
     fetchData();
-  }, [id]);
+  }, [id,setValue]);
+  
 
   console.log("user Data outside the useEffect", userData);
   const onError = (errors) => {
     console.log("form Errors==>", errors);
   };
+
+  const data = userData?.experience?.map(item=>
+    item.experience
+  )
+  console.log("updated data>>>",data)
+
   return (
     <>
       <Nav></Nav>
@@ -73,7 +90,7 @@ export default function Update() {
                   id="name"
                   name="name"
                   type="text"
-                  defaultValue={userData.name}
+                  // defaultValue={userData.name}
                   className=" bg-white border-2 rounded border-black ps-2"
                   {...register("name", {
                     required: "name is required",
@@ -97,7 +114,7 @@ export default function Update() {
                   id="username"
                   name="username"
                   type="text"
-                  defaultValue={userData.username}
+                  // defaultValue={userData.username}
                   className="bg-white border-2 rounded border-black ps-2"
                   {...register("username", {
                     required: "username is reqquired",
@@ -121,13 +138,46 @@ export default function Update() {
                   id="address"
                   name="address"
                   type="text"
-                  defaultValue={userData.address}
+                  // defaultValue={userData.address}
                   className="bg-white border-2 rounded border-black ps-2"
                   {...register("address", {
                     required: "Address is reqquired",
                   })}
                 />
               )}
+            </div>
+            {errors.address && (
+              <div className="bg-white flex mt-3 text-red-500 justify-end">
+                {errors.address.message}
+              </div>
+            )}
+          </div>
+          <br/>
+          <br/>
+          <div className="flex flex-col justify-between bg-white">
+            <div className="flex justify-between bg-white">
+              <label className="bg-white">Experience</label>
+              <div>
+
+              {userData && (
+                userData?.experience?.map((item,index)=>{
+                  
+                  return(
+                    <input
+                    key={index}
+                      type="text"
+                      className="bg-white border-2 rounded border-black ps-2"
+                      {...register(`experience[${index}]`, {
+                        required: "experience is reqquired",
+                        })}
+                        />
+        
+                  )
+                })
+                
+              )}
+              
+              </div>
             </div>
             {errors.address && (
               <div className="bg-white flex mt-3 text-red-500 justify-end">

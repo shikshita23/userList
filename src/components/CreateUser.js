@@ -134,24 +134,17 @@ export default function CreateUser() {
 
               <label className="bg-white">Experience</label>
               <FontAwesomeIcon icon={faPlus} className="cursor-pointer me-2 ms-2 mt-1" onClick={()=>append({experience:""})} />
-              
-              {/* <input type="text" name="experience" className="bg-white border-2 rounded border-black"  {...register("experience.experience[0]", {
-                      required: "experience is reqquired",
-                    })}></input> */}
               </div>
               <br/>
               <div className="flex flex-col">
 
               {fields.map((item,index)=>(
                 <>
-
-                  <div key={item.id} className="flex justify-end">
-               
-                  
+                  {console.log("fields==>",fields)}
+                  <div key={item.id} className="flex justify-end">       
                 <FontAwesomeIcon
                   icon={faTrash}
                   className="cursor-pointer me-4" onClick={()=>remove(index)}
-                  
                 />
                   <input
                     name={`experience[${index}].experience`}
@@ -159,9 +152,7 @@ export default function CreateUser() {
                     defaultValue={item.experience}
                     className="bg-white border-2 rounded border-black"
                     {...register(`experience[${index}].experience`)}
-
                   />
-                   
                   </div>
                   <br/>
                 </>

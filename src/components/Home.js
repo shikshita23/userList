@@ -64,7 +64,7 @@ export default function Home() {
         <div className="borderElement start bg-sky-100 ">Address</div>
         <div className="borderElement start bg-sky-100 ">Experience</div>
         <div className="borderElement col-span-2 start bg-sky-100 ">Action</div>
-        {data.map((user) => {
+        {data?.map((user) => {
           return (
             <React.Fragment key={user.id}>
               {console.log("user id==>", user.id)}
@@ -74,15 +74,14 @@ export default function Home() {
               <div className="borderElement"> {user.address}</div>
               <div className="border-y-[1px] border-black flex flex-col ">
 
-              {user?.experience?.map((item)=>
+              {user.experience?.map((item)=>
               {
                 console.log("exp>>",item)
                 return(
                   (    
 
                      <li className="list-none "> {item.experience}</li>
-                   
-                
+
                 )
                 )
               })}
