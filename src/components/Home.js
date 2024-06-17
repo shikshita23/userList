@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import Nav from "./Nav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ToastMsg from "./ToastProvider";
 export default function Home() {
   const [data, setData] = useState([]);
   const fetchData = async () => {
@@ -28,7 +27,7 @@ export default function Home() {
   useEffect(() => {
     fetchData();
   }, []);
-
+console.log("data>>>",data)
   const notifyDel = () => {
     toast.success("User Deleted", {
       position: "top-right",
@@ -55,7 +54,7 @@ export default function Home() {
   };
   return (
     <>
-      <Nav></Nav>
+      <Nav/>
 
       <div className="grid grid-cols-7 border-2 border-black tableSize mt-12 mx-auto bg-white ">
         <div className="borderElement bg-sky-100">ID</div>
@@ -74,17 +73,11 @@ export default function Home() {
               <div className="borderElement"> {user.address}</div>
               <div className="border-y-[1px] border-black flex flex-col ">
 
-              {user.experience?.map((item)=>
-              {
-                console.log("exp>>",item)
-                return(
-                  (    
-
-                     <li className="list-none "> {item.experience}</li>
-
-                )
-                )
-              })}
+              {user.experience?.map((item,index)=>(
+                 <div key={index} className="list-none "> {item.experience}</div>
+              )
+              
+              )}
               </div>
               <div className="borderElement ">
                 {" "}

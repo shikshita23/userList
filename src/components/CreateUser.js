@@ -1,13 +1,13 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ToastMsg from "./ToastProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 export default function CreateUser() {
   const navigate = useNavigate();
-
   //Destructuring 
   const {
     register,
@@ -53,6 +53,11 @@ export default function CreateUser() {
       }
     });
   };
+
+  
+
+  
+
   const onError = (errors) => {
     console.log("form Errors==>", errors);
   };
@@ -96,15 +101,18 @@ export default function CreateUser() {
                 type="text"
                 className="bg-white border-2 rounded border-black"
                 {...register("username", {
-                  required: "username is reqquired",
+                  required: true,
+                  minLength:4
                 })}
               />
             </div>
-            {errors.username && (
+            
               <div className="bg-white flex mt-3 text-red-500 justify-end">
-                {errors.username.message}
+                {errors.username?.type==="required" &&"username is required"}
+                {errors.username?.type==="minLength" &&"username must have more than 4 characters"}
+                
               </div>
-            )}
+            
           </div>
           <br />
           <br />
@@ -142,10 +150,10 @@ export default function CreateUser() {
                 <>
                   {console.log("fields==>",fields)}
                   <div key={item.id} className="flex justify-end">       
-                {/* <FontAwesomeIcon
+                <FontAwesomeIcon
                   icon={faTrash}
                   className="cursor-pointer me-4" onClick={()=>remove(index)}
-                /> */}
+                />
                   <input
                     name={`experience[${index}].experience`}
                     type="text"
@@ -160,7 +168,7 @@ export default function CreateUser() {
               </div>
             </div>
             <br/><br/>
-            {errors.experience && (
+            {errors.experience && ( //if errors.experience is there it executes the statements behind it
               <div className="bg-white flex mt-3 text-red-500 justify-end">
                 {errors.experience.message}
               </div>

@@ -59,9 +59,10 @@ export default function Update() {
         setValue('name',userData.name);
         setValue('username',userData.username);
         setValue('address',userData.address);
-        userData.experience.map((experience, index) => {
-          setValue(`experience[${index}].experience`, experience.experience);
-        });
+        // userData.experience.map((experience, index) => {
+        //   setValue(`experience.${index}.experience`, experience.experience);
+        // });
+        setValue('experience', userData.experience)
         } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -161,88 +162,37 @@ export default function Update() {
           <br/>
           <br/>
           <div className="flex flex-col justify-between bg-white">
-            <div className="flex justify-between bg-white">
+            <div className="flex flex-col bg-white">
+              <div className="flex justify-between"> 
+
               <label className="bg-white">Experience</label>
-              <div>
-              {/* <input type="text" name="experience" className="bg-white border-2 rounded border-black ps-2"
-                      {...register(`experience[0].experience`, {
-                        required: "experience is reqquired",
-                        })}></input> */}
-              <FontAwesomeIcon icon={faPlus} className="cursor-pointer me-2 ms-2 mt-1 mb-4" onClick={()=>append({experience:""})} />
-              {userData && (
-                // userData?.experience?.map((item,index)=>{
-                  
-                // fields.map((item,index)=>{
-                //   return(
-                //     <>
-                //     {/* <FontAwesomeIcon
-                //   icon={faTrash}
-                //   className="cursor-pointer me-4" onClick={()=>remove(index)}
-                // /> */}
-                //     <input
-                //     key={index}
-                //       type="text"
-                //       name="experience"
-                //       className="bg-white border-2 rounded border-black ps-2"
-                //       {...register(`experience[${index}].experience`, {
-                //         required: "experience is reqquired",
-                //         })}
-                //         />
-                //     </>
-                //   )
-                // })
-                fields.map((item,index)=>(
-                  <>
-                    {console.log("fields==>",fields)}
-                    <div key={item.id} className="flex justify-end">       
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    className="cursor-pointer me-4" onClick={()=>remove(index)}
+              <FontAwesomeIcon icon={faPlus} className="cursor-pointer me-2 ms-2 mt-1" onClick={()=>append({experience:""})} />
+              </div>
+              <br/>
+              <div className="flex flex-col ">
+              {fields.map((item,index)=>(
+                <>
+                  {console.log("fields==>",fields)}
+                  <div key={item.id} className="flex justify-end">       
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="cursor-pointer me-4" onClick={()=>remove(index)}
+                />
+                  <input
+                    name={`experience[${index}].experience`}
+                    type="text"
+                    //  defaultValue={item.experience}
+                    className="bg-white border-2 rounded border-black"
+                    {...register(`experience[${index}].experience`)}
                   />
-                    <input
-                      name={`experience[${index}].experience`}
-                      type="text"
-                      defaultValue={item.experience}
-                      className="bg-white border-2 rounded border-black"
-                      {...register(`experience[${index}].experience`)}
-                    />
-                    </div>
-                    <br/>
-                  </>
-                    ))
-              )}
-              {/* <div className="flex flex-col">
-                {userData &&(
-                  userData?.experience?.map((item,index)=>(
-                    <input
-                                    key={index}
-                                      type="text"
-                                      name="experience"
-                                      className="bg-white border-2 rounded border-black ps-2"
-                                      {...register(`experience[${index}].experience`, {
-                                        required: "experience is reqquired",
-                                        })}
-                                        />
-                  )
-                ))}
-                { fields.map((item,index)=>{
-                                  return(
-                                    <input
-                                    key={index}
-                                      type="text"
-                                      name="experience"
-                                      className="bg-white border-2 rounded border-black ps-2"
-                                      {...register(`experience[${index}].experience`, {
-                                        required: "experience is reqquired",
-                                        })}
-                                        />
-                                  )
-                                })  } 
-              </div> */}
-
-
+                  
+                  </div>
+                  <br/>
+                </>
+                  ))}
               </div>
             </div>
+            <br/><br/>
             {errors.experience && (
               <div className="bg-white flex mt-3 text-red-500 justify-end">
                 {errors.experience.message}
