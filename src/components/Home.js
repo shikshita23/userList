@@ -1,5 +1,4 @@
 import "../Css/Home.css";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +7,8 @@ import { Link } from "react-router-dom";
 import Nav from "./Nav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axiosNoAuth from "../axios/axios";
+
 export default function Home() {
    const [data, setData] = useState([]);
   // const fetchData = async () => {
@@ -27,7 +28,7 @@ export default function Home() {
 
   const fetchData=async ()=>{
     try{
-      const res= await axios.get("http://localhost:8000/user");
+      const res= await axiosNoAuth.get("/user");
       setData(res.data);
     }
     catch(error){
@@ -66,7 +67,7 @@ console.log("data>>>",data)
 
   const handleDelete=async(id)=>{
     try{
-      const res=await axios.delete(`http://localhost:8000/user/${id}`);
+      const res=await axiosNoAuth.delete(`/user/${id}`);
       console.log("data after deletion =>",res);
       if(res){
         fetchData();

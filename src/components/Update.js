@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Nav from "./Nav";
+import axiosNoAuth from "../axios/axios";
 export default function Update() {
   const [userData, setUserData] = useState(null);
   const { id } = useParams();
@@ -50,7 +51,7 @@ export default function Update() {
  
   const onSubmit=async(data)=>{
    
-      const res=await axios.put(` http://localhost:8000/user/${id}`,data);
+      const res=await axiosNoAuth.put(`/user/${id}`,data);
       if(res){
         console.log("res>>>", res);
        console.log("Successfully Updated");
@@ -83,7 +84,7 @@ export default function Update() {
   
   const fetchData=async()=>{
     try{
-      const res=await axios.get(`http://localhost:8000/user/${id}`);
+      const res=await axiosNoAuth.get(`/user/${id}`);
       console.log("response from uspdate==>",res)
       if(!res){
        throw new Error("Failed to fetch user data");

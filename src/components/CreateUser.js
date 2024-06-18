@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
+import axiosNoAuth from "../axios/axios";
 export default function CreateUser() {
   const navigate = useNavigate();
   //Destructuring
@@ -55,7 +56,7 @@ export default function CreateUser() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:8000/user", data);
+      const response = await axiosNoAuth.post("/user", data);
       console.log("data from axios=>", response);
       if (response) {
         notifyCreate("created successfully");

@@ -21,39 +21,6 @@
       "id": "5fa8"
     },
     {
-      "id": "b8b8",
-      "name": "qew",
-      "username": "sssw",
-      "address": "eee",
-      "experience": [
-        {
-          "experience": "rrr"
-        }
-      ]
-    },
-    {
-      "id": "758e",
-      "name": "we",
-      "username": "rftr",
-      "address": "ere",
-      "experience": [
-        {
-          "experience": "rt"
-        }
-      ]
-    },
-    {
-      "id": "acad",
-      "name": "bh",
-      "username": "njnj",
-      "address": "nj",
-      "experience": [
-        {
-          "experience": "nj"
-        }
-      ]
-    },
-    {
       "id": "769e",
       "name": "asdfas",
       "username": "asdf",
@@ -79,95 +46,18 @@
       ]
     },
     {
-      "id": "8566",
-      "name": "hello",
-      "username": "hide",
-      "address": "ih",
       "experience": [
         {
-          "experience": "aaa"
-        }
-      ]
-    },
-    {
-      "id": "856e",
-      "name": "hello",
-      "username": "hide",
-      "address": "ih",
-      "experience": [
-        {
-          "experience": "aaa"
-        }
-      ]
-    },
-    {
-      "experience": [
-        {
-          "experience": "aaaee"
+          "experience": "frontend intern"
         },
         {
-          "experience": "beeeee"
+          "experience": "frontend developerrrrr"
         }
       ],
-      "name": "helloooo",
-      "username": "hideeeeooo",
-      "address": "ihhhh",
-      "id": "5e4f"
-    },
-    {
-      "id": "2484",
-      "name": "hello",
-      "username": "hide",
-      "address": "ih",
-      "experience": [
-        {
-          "experience": "aaa"
-        }
-      ]
-    },
-    {
-      "id": "db61",
-      "name": "fghdfg",
-      "username": "sghrtghfghsfg",
-      "address": "gfhfgh",
-      "experience": [
-        {
-          "experience": "dfhstf"
-        }
-      ]
-    },
-    {
-      "id": "cbdf",
-      "name": "dgsfdgsdfh",
-      "username": "sfghsrgh",
-      "address": "sghsf",
-      "experience": [
-        {
-          "experience": "dfgujhd"
-        }
-      ]
-    },
-    {
-      "id": "4a9a",
-      "name": "www",
-      "username": "eeew",
-      "address": "sss",
-      "experience": [
-        {
-          "experience": "ddd"
-        }
-      ]
-    },
-    {
-      "id": "07d6",
-      "name": "ttt",
-      "username": "gggg",
-      "address": "bbbb",
-      "experience": [
-        {
-          "experience": "nnn"
-        }
-      ]
+      "name": "Sita",
+      "username": "sita134",
+      "address": "baneshwor",
+      "id": "3bf8"
     }
   ]
 }
