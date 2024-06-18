@@ -1,4 +1,5 @@
 import "../Css/Home.css";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -8,25 +9,35 @@ import Nav from "./Nav";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
-  const [data, setData] = useState([]);
-  const fetchData = async () => {
-    try {
-      const res = await fetch("http://localhost:8000/user", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      setData(data);
-    } catch (error) {
+   const [data, setData] = useState([]);
+  // const fetchData = async () => {
+  //   try {
+  //     const res = await fetch("http://localhost:8000/user", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const data = await res.json();
+  //     setData(data);
+  //   } catch (error) {
+  //     console.log("Error fetching data:", error);
+  //   }
+  // };
+
+  const fetchData=async ()=>{
+    try{
+      const res= await axios.get("http://localhost:8000/user");
+      setData(res.data);
+    }
+    catch(error){
       console.log("Error fetching data:", error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
+
 console.log("data>>>",data)
   const notifyDel = () => {
     toast.success("User Deleted", {
@@ -40,18 +51,34 @@ console.log("data>>>",data)
       theme: "light",
     });
   };
-  const handleDelete = (id) => {
-    fetch(`http://localhost:8000/user/${id}`, {
-      method: "DELETE",
-    })
-      .then(() => {
+  // const handleDelete = (id) => {
+  //   fetch(`http://localhost:8000/user/${id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then(() => {
+  //       fetchData();
+  //       notifyDel();
+        
+  //       console.log("Deleted successfully", id);
+  //     })
+  //     .catch((error) => console.error(error));
+  // };
+
+  const handleDelete=async(id)=>{
+    try{
+      const res=await axios.delete(`http://localhost:8000/user/${id}`);
+      console.log("data after deletion =>",res);
+      if(res){
         fetchData();
         notifyDel();
-        
         console.log("Deleted successfully", id);
-      })
-      .catch((error) => console.error(error));
-  };
+      }
+    }
+    catch(error){
+      console.error(error);
+    }
+  }
+
   return (
     <>
       <Nav/>

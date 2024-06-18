@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,42 +36,73 @@ export default function Update() {
     });
   };
   const navigate = useNavigate();
-  const onSubmit = (data) => {
-    console.log("data==>", data);
-    fetch(` http://localhost:8000/user/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      console.log("res>>>", response);
-      console.log("Successfully Updated");
-    });
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:8000/user/${id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        const userData = await response.json();
+  // const onSubmit = (data) => {
+  //   console.log("data==>", data);
+  //   fetch(` http://localhost:8000/user/${id}`, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   }).then((response) => {
+  //     console.log("res>>>", response);
+  //     console.log("Successfully Updated");
+  //   });
+  // };
+ 
+  const onSubmit=async(data)=>{
+   
+      const res=await axios.put(` http://localhost:8000/user/${id}`,data);
+      if(res){
+        console.log("res>>>", res);
+       console.log("Successfully Updated");
+      }
+   
+  } 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`http://localhost:8000/user/${id}`);
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch user data");
+  //       }
+  //       const userData = await response.json();
+  //       setUserData(userData);
+  //       console.log("userData==>", userData);
+  //       setValue('name',userData.name);
+  //       setValue('username',userData.username);
+  //       setValue('address',userData.address);
+  //       // userData.experience.map((experience, index) => {
+  //       //   setValue(`experience.${index}.experience`, experience.experience);
+  //       // });
+  //       setValue('experience', userData.experience)
+  //       } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [id,setValue]);
+  
+  const fetchData=async()=>{
+    try{
+      const res=await axios.get(`http://localhost:8000/user/${id}`);
+      console.log("response from uspdate==>",res)
+      if(!res){
+       throw new Error("Failed to fetch user data");
+      }
+      const userData = res.data;
         setUserData(userData);
         console.log("userData==>", userData);
         setValue('name',userData.name);
         setValue('username',userData.username);
-        setValue('address',userData.address);
-        // userData.experience.map((experience, index) => {
-        //   setValue(`experience.${index}.experience`, experience.experience);
-        // });
-        setValue('experience', userData.experience)
-        } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
+       setValue('address',userData.address);
+      setValue('experience', userData.experience)
+    }
+   catch{
+      console.error("Error fetching user data:", errors);
+    }
+  }
+  useEffect(()=>{
     fetchData();
-  }, [id,setValue]);
-  
-
+  },[id,setValue])
   console.log("user Data outside the useEffect", userData);
   const onError = (errors) => {
     console.log("form Errors==>", errors);
