@@ -1,14 +1,11 @@
 import { useForm, useFieldArray } from "react-hook-form";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
-import axiosNoAuth from "../axios/axios";
+import { usePostUser } from "./usePostUser";
 export default function CreateUser() {
-  const navigate = useNavigate();
+  const {mutation} =usePostUser();
   //Destructuring
   const {
     register,
@@ -54,21 +51,50 @@ export default function CreateUser() {
   //   });
   // };
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await axiosNoAuth.post("/user", data);
-      console.log("data from axios=>", response);
-      if (response) {
-        notifyCreate("created successfully");
-        setTimeout(() => {
-          navigate("/view");
-        }, 3500);
-      }
-    } catch (error) {
-      console.error("error in axios=>", error);
-    }
-  };
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const response = await axiosNoAuth.post("/user", data);
+  //     console.log("data from axios=>", response);
+  //     if (response) {
+  //       notifyCreate("created successfully");
+  //       setTimeout(() => {
+  //         navigate("/view");
+  //       }, 3500);
+  //     }
+  //   } catch (error) {
+  //     console.error("error in axios=>", error);
+  //   }
+  // };
 
+  // const { mutate: mutateCreateUser } = useMutation(
+  //   async (data) => {
+  //     const response = await axiosNoAuth.post('/user', data);
+  //     return response.data; 
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       notifyCreate('User created successfully');
+  //       setTimeout(() => {
+  //         navigate('/view');
+  //       }, 3500);
+  //     },
+  //     onError: (error) => {
+  //       console.error('Error creating user:', error);
+  //       toast.error('Failed to create user');
+  //     },
+  //   }
+  // );
+
+
+  
+  const onSubmit = async (data) => {
+
+    // mutate trigger the mutation operation defined in your useMutation setup.
+    mutation.mutate(data);
+  };
+  
+
+  
   const onError = (errors) => {
     console.log("form Errors==>", errors);
   };

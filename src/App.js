@@ -1,19 +1,21 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import CreateUser from "./components/CreateUser";
+import CreateUser from "./components/form/CreateUser";
 import Layout from "./components/Layout";
-import Update from "./components/Update";
-import Home from "./components/Home";
+import Update from "./components/home/Update";
+import Home from "./components/home";
+import { QueryClient, QueryClientProvider } from 'react-query';
 function App() {
+  const  queryClient = new QueryClient();
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/create" element={<CreateUser />}></Route>
-        <Route path="/view" element={<Home></Home>}></Route>
-        <Route path="/edit/:id" element={<Update></Update>}></Route>
-        <Route path="/" element={<Layout></Layout>}></Route>
+        <Route path="/create" element={<CreateUser/>}></Route>
+        <Route path="/view" element={<Home/>}></Route>
+        <Route path="/edit/:id" element={<Update/>}></Route>
+        <Route path="/" element={<Layout/>}></Route>
       </Routes>
-    </>
+    </QueryClientProvider>
   );
 }
 

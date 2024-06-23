@@ -1,8 +1,6 @@
-import Home from "./Home";
+import Home from "./home";
 export default function Layout() {
   return (
-    <>
-      <Home></Home>
-    </>
+      <Home />
   );
 }

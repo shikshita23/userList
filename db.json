@@ -1,63 +1,48 @@
 {
   "user": [
     {
+      "id": "adf3",
+      "name": "oojoj",
+      "username": "jjjj",
+      "address": "kokoko",
       "experience": [
         {
-          "experience": "12222"
-        },
-        {
-          "experience": "3331"
-        },
-        {
-          "experience": "4444"
-        },
-        {
-          "experience": "5555"
-        }
-      ],
-      "name": "dsf",
-      "username": "fdff",
-      "address": "dfd",
-      "id": "5fa8"
-    },
-    {
-      "id": "769e",
-      "name": "asdfas",
-      "username": "asdf",
-      "address": "asdf",
-      "experience": [
-        {
-          "experience": "asdf"
-        },
-        {
-          "experience": "asdf"
+          "experience": "dppdp"
         }
       ]
     },
     {
-      "id": "f9a8",
-      "name": "hello",
-      "username": "hide",
-      "address": "ih",
+      "id": "6e60",
+      "name": "oojoj",
+      "username": "jjjj",
+      "address": "kokoko",
       "experience": [
         {
-          "experience": "aaa"
+          "experience": "dppdp"
         }
       ]
     },
     {
+      "id": "0297",
+      "name": "oojoj",
+      "username": "jjjj",
+      "address": "kokoko",
       "experience": [
         {
-          "experience": "frontend intern"
-        },
-        {
-          "experience": "frontend developerrrrr"
+          "experience": "dppdp"
         }
-      ],
-      "name": "Sita",
-      "username": "sita134",
-      "address": "baneshwor",
-      "id": "3bf8"
+      ]
+    },
+    {
+      "id": "51d3",
+      "name": "pppp",
+      "username": "ppppppp",
+      "address": "ppppppppppp",
+      "experience": [
+        {
+          "experience": "pp"
+        }
+      ]
     }
   ]
 }

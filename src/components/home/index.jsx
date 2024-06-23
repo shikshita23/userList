@@ -1,16 +1,17 @@
-import "../Css/Home.css";
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
-import { Link } from "react-router-dom";
-import Nav from "./Nav";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axiosNoAuth from "../axios/axios";
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
+import "../../Css/Home.css";
+import Nav from "../navbar/Nav";
+import { useGetUsers } from "./useGetUsers";
+import { useDeleteUser } from "./useDeleteUser";
 export default function Home() {
-   const [data, setData] = useState([]);
+  //  const [data, setData] = useState([]);
   // const fetchData = async () => {
   //   try {
   //     const res = await fetch("http://localhost:8000/user", {
@@ -26,20 +27,62 @@ export default function Home() {
   //   }
   // };
 
-  const fetchData=async ()=>{
-    try{
-      const res= await axiosNoAuth.get("/user");
-      setData(res.data);
-    }
-    catch(error){
-      console.log("Error fetching data:", error);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const fetchData=async ()=>{
+  //   try{
+  //     const res= await axiosNoAuth.get("/user");
+  //     setData(res.data);
+  //   }
+  //   catch(error){
+  //     console.log("Error fetching data:", error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
-console.log("data>>>",data)
+  // const { isLoading, error, data, refetch } = useQuery('users', async () => {
+  //   const response = await axiosNoAuth.get("/user");
+  //   return response.data;
+  // });
+  // const handleDelete = (id) => {
+  //   fetch(`http://localhost:8000/user/${id}`, {
+  //     method: "DELETE",
+  //   })
+  //     .then(() => {
+  //       fetchData();
+  //       notifyDel();
+
+  //       console.log("Deleted successfully", id);
+  //     })
+  //     .catch((error) => console.error(error));
+  // };
+
+  // const handleDelete=async(id)=>{
+  //   try{
+  //     const res=await axiosNoAuth.delete(`/user/${id}`);
+  //     console.log("data after deletion =>",res);
+  //     if(res){
+  //       refetch();
+  //       notifyDel();
+  //       console.log("Deleted successfully", id);
+  //     }
+  //   }
+  //   catch(error){
+  //     console.error(error);
+  //   }
+  // }
+
+  const { data, error, isLoading,refetch: refetchUsers} = useGetUsers();
+  console.log("data from reactQuery==>",data)
+  const {mutation,isSuccess} = useDeleteUser();
+  useEffect(()=>{
+    if(mutation?.isSuccess === true){
+      refetchUsers()
+    }
+  },[mutation?.isSuccess])
+ 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
   const notifyDel = () => {
     toast.success("User Deleted", {
       position: "top-right",
@@ -51,39 +94,14 @@ console.log("data>>>",data)
       progress: undefined,
       theme: "light",
     });
-  };
-  // const handleDelete = (id) => {
-  //   fetch(`http://localhost:8000/user/${id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then(() => {
-  //       fetchData();
-  //       notifyDel();
-        
-  //       console.log("Deleted successfully", id);
-  //     })
-  //     .catch((error) => console.error(error));
-  // };
-
-  const handleDelete=async(id)=>{
-    try{
-      const res=await axiosNoAuth.delete(`/user/${id}`);
-      console.log("data after deletion =>",res);
-      if(res){
-        fetchData();
-        notifyDel();
-        console.log("Deleted successfully", id);
-      }
-    }
-    catch(error){
-      console.error(error);
-    }
+  }; 
+  if(isSuccess){
+    notifyDel();
   }
-
+  
   return (
     <>
-      <Nav/>
-
+      <Nav />
       <div className="grid grid-cols-7 border-2 border-black tableSize mt-12 mx-auto bg-white ">
         <div className="borderElement bg-sky-100">ID</div>
         <div className="borderElement bg-sky-100">Name</div>
@@ -100,12 +118,12 @@ console.log("data>>>",data)
               <div className="borderElement">{user.username}</div>
               <div className="borderElement"> {user.address}</div>
               <div className="border-y-[1px] border-black flex flex-col ">
-
-              {user.experience?.map((item,index)=>(
-                 <div key={index} className="list-none "> {item.experience}</div>
-              )
-              
-              )}
+                {user.experience?.map((item, index) => (
+                  <div key={index} className="list-none ">
+                    {" "}
+                    {item.experience}
+                  </div>
+                ))}
               </div>
               <div className="borderElement ">
                 {" "}
@@ -120,7 +138,10 @@ console.log("data>>>",data)
                 <FontAwesomeIcon
                   icon={faTrash}
                   className="cursor-pointer"
-                  onClick={() => handleDelete(user.id)}
+                  onClick={() => 
+                    mutation.mutate({ id: user.id })
+                  }
+                  // {() => handleDelete(user.id)}
                 />
               </div>
             </React.Fragment>

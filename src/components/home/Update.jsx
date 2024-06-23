@@ -1,13 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import Nav from "./Nav";
-import axiosNoAuth from "../axios/axios";
+
+import Nav from "../navbar/Nav";
+import {usePutUser} from "../home/usePutUser"
+import { useGetSingleUser } from "./useGetSingleUser";
+
 export default function Update() {
   const [userData, setUserData] = useState(null);
   const { id } = useParams();
@@ -22,8 +24,6 @@ export default function Update() {
     control,
     name:"experience"
   })
-
-
   const notifyUpdate = () => {
     toast.success("Updated Successfully", {
       position: "top-right",
@@ -38,77 +38,119 @@ export default function Update() {
   };
   const navigate = useNavigate();
   // const onSubmit = (data) => {
-  //   console.log("data==>", data);
-  //   fetch(` http://localhost:8000/user/${id}`, {
-  //     method: "PUT",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   }).then((response) => {
-  //     console.log("res>>>", response);
-  //     console.log("Successfully Updated");
-  //   });
-  // };
- 
-  const onSubmit=async(data)=>{
-   
-      const res=await axiosNoAuth.put(`/user/${id}`,data);
-      if(res){
-        console.log("res>>>", res);
-       console.log("Successfully Updated");
-      }
-   
-  } 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`http://localhost:8000/user/${id}`);
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch user data");
-  //       }
-  //       const userData = await response.json();
-  //       setUserData(userData);
-  //       console.log("userData==>", userData);
-  //       setValue('name',userData.name);
-  //       setValue('username',userData.username);
-  //       setValue('address',userData.address);
-  //       // userData.experience.map((experience, index) => {
-  //       //   setValue(`experience.${index}.experience`, experience.experience);
-  //       // });
-  //       setValue('experience', userData.experience)
-  //       } catch (error) {
-  //       console.error("Error fetching user data:", error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [id,setValue]);
+    //   console.log("data==>", data);
+    //   fetch(` http://localhost:8000/user/${id}`, {
+      //     method: "PUT",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify(data),
+      //   }).then((response) => {
+        //     console.log("res>>>", response);
+        //     console.log("Successfully Updated");
+        //   });
+        // };
+        
+        // useEffect(() => {
+                //   const fetchData = async () => {
+                  //     try {
+                    //       const response = await fetch(`http://localhost:8000/user/${id}`);
+                    //       if (!response.ok) {
+                      //         throw new Error("Failed to fetch user data");
+                      //       }
+                      //       const userData = await response.json();
+                      //       setUserData(userData);
+                      //       console.log("userData==>", userData);
+                      //       setValue('name',userData.name);
+                      //       setValue('username',userData.username);
+                      //       setValue('address',userData.address);
+                      //       // userData.experience.map((experience, index) => {
+                        //       //   setValue(`experience.${index}.experience`, experience.experience);
+                        //       // });
+                        //       setValue('experience', userData.experience)
+                        //       } catch (error) {
+                          //       console.error("Error fetching user data:", error);
+                          //     }
+                          //   };
+                          //   fetchData();
+                          // }, [id,setValue]);
+                          // const UserDataComponent=({id})=>{
+                            //   const{data:updateUser,error,isLoading}=useQuery({
+            //     queryKey:["user",id],
+            //     queryFn:()=>
+              //       axiosNoAuth.get(`/user/${id}`).then((res)=>res.data)
+            //   })
+      // }
+      
+      
+      //  const fetchData=async()=>{
+        //     try{
+          //       const res=await axiosNoAuth.get(`/user/${id}`);
+          //       console.log("response from uspdate==>",res)
+          //       if(!res){
+            //        throw new Error("Failed to fetch user data");
+            //       }
+            //       const userData = res.data;
+            //         setUserData(userData);
+            //         console.log("userData==>", userData);
+            //         setValue('name',userData.name);
+            //         setValue('username',userData.username);
+            //        setValue('address',userData.address);
+            //       setValue('experience', userData.experience)
+            //     }
+            //    catch{
+              //       console.error("Error fetching user data:", errors);
+              //     }
+              //   }
+              //   useEffect(()=>{
+                //     fetchData();
+        //   },[id,setValue])
+
+  const {mutation} = usePutUser();
+  const { data: fetchedUserData } = useGetSingleUser(id);
   
-  const fetchData=async()=>{
-    try{
-      const res=await axiosNoAuth.get(`/user/${id}`);
-      console.log("response from uspdate==>",res)
-      if(!res){
-       throw new Error("Failed to fetch user data");
-      }
-      const userData = res.data;
-        setUserData(userData);
-        console.log("userData==>", userData);
-        setValue('name',userData.name);
-        setValue('username',userData.username);
-       setValue('address',userData.address);
-      setValue('experience', userData.experience)
+  useEffect(() => {
+    if (fetchedUserData) {
+      setUserData(fetchedUserData);
+      setValue("name", fetchedUserData.name);
+      setValue("username", fetchedUserData.username);
+      setValue("address", fetchedUserData.address);
+      setValue("experience", fetchedUserData.experience);
     }
-   catch{
-      console.error("Error fetching user data:", errors);
+  }, [fetchedUserData, setValue, id]);
+  const onSubmit=async(data)=>{
+    // const res=await axiosNoAuth.put(`/user/${id}`,data);
+    //   if(res){
+      //     console.log("res>>>", res);
+      //     console.log("Successfully Updated");
+      //   }   
+      // console.log("Submitted") 
+      mutation.mutate(id,data)
+    } 
+    
+// const fetchSingleData = async () => {
+//     try {
+//       const res = await axiosNoAuth.get(`/user/${id}`);
+//       setUserData(res.data)
+//       return res.data;
+//     } catch (error) {
+//       console.error('Error fetching user data:', error);
+//       throw new Error('Failed to fetch user data');
+//     }
+// };
+  
+  useEffect(() => {
+    if (userData) {
+      setValue('name', userData.name);
+      setValue('username', userData.username);
+      setValue('address', userData.address);
+      setValue('experience', userData.experience);
     }
-  }
-  useEffect(()=>{
-    fetchData();
-  },[id,setValue])
-  console.log("user Data outside the useEffect", userData);
-  const onError = (errors) => {
+}, [userData, setValue]);
+
+console.log("user Data outside the useEffect", userData);
+const onError = (errors) => {
     console.log("form Errors==>", errors);
   };
-
+  
   const data = userData?.experience?.map(item=>
     item.experience
   )
