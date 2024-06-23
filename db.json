@@ -12,35 +12,30 @@
       ]
     },
     {
-      "id": "6e60",
-      "name": "oojoj",
-      "username": "jjjj",
-      "address": "kokoko",
-      "experience": [
-        {
-          "experience": "dppdp"
-        }
-      ]
+      "id": "6e60"
     },
     {
-      "id": "0297",
-      "name": "oojoj",
-      "username": "jjjj",
-      "address": "kokoko",
-      "experience": [
-        {
-          "experience": "dppdp"
-        }
-      ]
+      "id": "0297"
     },
     {
       "id": "51d3",
-      "name": "pppp",
-      "username": "ppppppp",
-      "address": "ppppppppppp",
       "experience": [
         {
-          "experience": "pp"
+          "experience": "front end"
+        }
+      ],
+      "name": "aashish gir",
+      "username": "userchanged",
+      "address": "addres dhapakhel"
+    },
+    {
+      "id": "90b6",
+      "name": "test",
+      "username": "1user1",
+      "address": "adres",
+      "experience": [
+        {
+          "experience": "afa"
         }
       ]
     }

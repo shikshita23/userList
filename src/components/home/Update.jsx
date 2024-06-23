@@ -7,12 +7,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Nav from "../navbar/Nav";
-import {usePutUser} from "../home/usePutUser"
+import { usePutUser } from "../home/usePutUser";
 import { useGetSingleUser } from "./useGetSingleUser";
+import { useQuery } from "react-query";
+import axiosNoAuth from "../../axios/axios";
+import { useMutation } from "react-query";
 
 export default function Update() {
   const [userData, setUserData] = useState(null);
   const { id } = useParams();
+  console.log("idFr", id);
   const {
     control,
     register,
@@ -20,10 +24,10 @@ export default function Update() {
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm();
-  const {append,remove,fields}=useFieldArray({
+  const { append, remove, fields } = useFieldArray({
     control,
-    name:"experience"
-  })
+    name: "experience",
+  });
   const notifyUpdate = () => {
     toast.success("Updated Successfully", {
       position: "top-right",
@@ -38,123 +42,151 @@ export default function Update() {
   };
   const navigate = useNavigate();
   // const onSubmit = (data) => {
-    //   console.log("data==>", data);
-    //   fetch(` http://localhost:8000/user/${id}`, {
-      //     method: "PUT",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify(data),
-      //   }).then((response) => {
-        //     console.log("res>>>", response);
-        //     console.log("Successfully Updated");
-        //   });
-        // };
-        
-        // useEffect(() => {
-                //   const fetchData = async () => {
-                  //     try {
-                    //       const response = await fetch(`http://localhost:8000/user/${id}`);
-                    //       if (!response.ok) {
-                      //         throw new Error("Failed to fetch user data");
-                      //       }
-                      //       const userData = await response.json();
-                      //       setUserData(userData);
-                      //       console.log("userData==>", userData);
-                      //       setValue('name',userData.name);
-                      //       setValue('username',userData.username);
-                      //       setValue('address',userData.address);
-                      //       // userData.experience.map((experience, index) => {
-                        //       //   setValue(`experience.${index}.experience`, experience.experience);
-                        //       // });
-                        //       setValue('experience', userData.experience)
-                        //       } catch (error) {
-                          //       console.error("Error fetching user data:", error);
-                          //     }
-                          //   };
-                          //   fetchData();
-                          // }, [id,setValue]);
-                          // const UserDataComponent=({id})=>{
-                            //   const{data:updateUser,error,isLoading}=useQuery({
-            //     queryKey:["user",id],
-            //     queryFn:()=>
-              //       axiosNoAuth.get(`/user/${id}`).then((res)=>res.data)
-            //   })
-      // }
-      
-      
-      //  const fetchData=async()=>{
-        //     try{
-          //       const res=await axiosNoAuth.get(`/user/${id}`);
-          //       console.log("response from uspdate==>",res)
-          //       if(!res){
-            //        throw new Error("Failed to fetch user data");
-            //       }
-            //       const userData = res.data;
-            //         setUserData(userData);
-            //         console.log("userData==>", userData);
-            //         setValue('name',userData.name);
-            //         setValue('username',userData.username);
-            //        setValue('address',userData.address);
-            //       setValue('experience', userData.experience)
-            //     }
-            //    catch{
-              //       console.error("Error fetching user data:", errors);
-              //     }
-              //   }
-              //   useEffect(()=>{
-                //     fetchData();
-        //   },[id,setValue])
+  //   console.log("data==>", data);
+  //   fetch(` http://localhost:8000/user/${id}`, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   }).then((response) => {
+  //     console.log("res>>>", response);
+  //     console.log("Successfully Updated");
+  //   });
+  // };
 
-  const {mutation} = usePutUser();
-  const { data: fetchedUserData } = useGetSingleUser(id);
-  
-  useEffect(() => {
-    if (fetchedUserData) {
-      setUserData(fetchedUserData);
-      setValue("name", fetchedUserData.name);
-      setValue("username", fetchedUserData.username);
-      setValue("address", fetchedUserData.address);
-      setValue("experience", fetchedUserData.experience);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`http://localhost:8000/user/${id}`);
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch user data");
+  //       }
+  //       const userData = await response.json();
+  //       setUserData(userData);
+  //       console.log("userData==>", userData);
+  //       setValue('name',userData.name);
+  //       setValue('username',userData.username);
+  //       setValue('address',userData.address);
+  //       // userData.experience.map((experience, index) => {
+  //       //   setValue(`experience.${index}.experience`, experience.experience);
+  //       // });
+  //       setValue('experience', userData.experience)
+  //       } catch (error) {
+  //       console.error("Error fetching user data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [id,setValue]);
+  // const UserDataComponent=({id})=>{
+  //   const{data:updateUser,error,isLoading}=useQuery({
+  //     queryKey:["user",id],
+  //     queryFn:()=>
+  //       axiosNoAuth.get(`/user/${id}`).then((res)=>res.data)
+  //   })
+  // }
+
+  //  const fetchData=async()=>{
+  //     try{
+  //       const res=await axiosNoAuth.get(`/user/${id}`);
+  //       console.log("response from uspdate==>",res)
+  //       if(!res){
+  //        throw new Error("Failed to fetch user data");
+  //       }
+  //       const userData = res.data;
+  //         setUserData(userData);
+  //         console.log("userData==>", userData);
+  //         setValue('name',userData.name);
+  //         setValue('username',userData.username);
+  //        setValue('address',userData.address);
+  //       setValue('experience', userData.experience)
+  //     }
+  //    catch{
+  //       console.error("Error fetching user data:", errors);
+  //     }
+  //   }
+  //   useEffect(()=>{
+  //     fetchData();
+  //   },[id,setValue])
+
+  const { mutation } = usePutUser();
+  const getSingleUser = async (id) => {
+    try {
+      const res = await axiosNoAuth.get(`/user/${id}`);
+      return res.data;
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      throw new Error("Failed to fetch user data");
     }
-  }, [fetchedUserData, setValue, id]);
-  const onSubmit=async(data)=>{
-    // const res=await axiosNoAuth.put(`/user/${id}`,data);
-    //   if(res){
-      //     console.log("res>>>", res);
-      //     console.log("Successfully Updated");
-      //   }   
-      // console.log("Submitted") 
-      mutation.mutate(id,data)
-    } 
-    
-// const fetchSingleData = async () => {
-//     try {
-//       const res = await axiosNoAuth.get(`/user/${id}`);
-//       setUserData(res.data)
-//       return res.data;
-//     } catch (error) {
-//       console.error('Error fetching user data:', error);
-//       throw new Error('Failed to fetch user data');
-//     }
-// };
-  
+  };
+  const {
+    data: user,
+    error: singleUserError,
+    isLoading: isLoadigSingleUser,
+  } = useQuery(["users", id], () => getSingleUser(id), {
+    select: (data) => data,
+  });
+
+  console.log("userNew", user);
+
+  useEffect(() => {
+    if (user) {
+      setUserData(user);
+      setValue("name", user?.name);
+      setValue("username", user?.username);
+      setValue("address", user?.address);
+      setValue("experience", user?.experience);
+    }
+  }, [user, setValue, id]);
+
+  const updateUserFn = async (data) => {
+    try {
+      const res = await axiosNoAuth.put(`/user/${id}`, data);
+      if (res) {
+        console.log("res>>>", res);
+        console.log("Successfully Updated");
+      }
+    } catch (error) {
+      console.log("Error while updating data", error);
+    }
+  };
+
+  const editMutation = useMutation(updateUserFn, {
+    onSuccess: () => {
+      notifyUpdate();
+    },
+    onError: (error) => {},
+  });
+
+  const onSubmit = async (data) => {
+    editMutation.mutate({ id: id, ...data });
+  };
+
+  // const fetchSingleData = async () => {
+  //     try {
+  //       const res = await axiosNoAuth.get(`/user/${id}`);
+  //       setUserData(res.data)
+  //       return res.data;
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //       throw new Error('Failed to fetch user data');
+  //     }
+  // };
+
   useEffect(() => {
     if (userData) {
-      setValue('name', userData.name);
-      setValue('username', userData.username);
-      setValue('address', userData.address);
-      setValue('experience', userData.experience);
+      setValue("name", userData.name);
+      setValue("username", userData.username);
+      setValue("address", userData.address);
+      setValue("experience", userData.experience);
     }
-}, [userData, setValue]);
+  }, [userData, setValue]);
 
-console.log("user Data outside the useEffect", userData);
-const onError = (errors) => {
+  console.log("user Data outside the useEffect", userData);
+  const onError = (errors) => {
     console.log("form Errors==>", errors);
   };
-  
-  const data = userData?.experience?.map(item=>
-    item.experience
-  )
-  console.log("updated data>>>",data)
+
+  const data = userData?.experience?.map((item) => item.experience);
+  console.log("updated data>>>", data);
 
   return (
     <>
@@ -234,40 +266,44 @@ const onError = (errors) => {
               </div>
             )}
           </div>
-          <br/>
-          <br/>
+          <br />
+          <br />
           <div className="flex flex-col justify-between bg-white">
             <div className="flex flex-col bg-white">
-              <div className="flex justify-between"> 
-
-              <label className="bg-white">Experience</label>
-              <FontAwesomeIcon icon={faPlus} className="cursor-pointer me-2 ms-2 mt-1" onClick={()=>append({experience:""})} />
-              </div>
-              <br/>
-              <div className="flex flex-col ">
-              {fields.map((item,index)=>(
-                <>
-                  {console.log("fields==>",fields)}
-                  <div key={item.id} className="flex justify-end">       
+              <div className="flex justify-between">
+                <label className="bg-white">Experience</label>
                 <FontAwesomeIcon
-                  icon={faTrash}
-                  className="cursor-pointer me-4" onClick={()=>remove(index)}
+                  icon={faPlus}
+                  className="cursor-pointer me-2 ms-2 mt-1"
+                  onClick={() => append({ experience: "" })}
                 />
-                  <input
-                    name={`experience[${index}].experience`}
-                    type="text"
-                    //  defaultValue={item.experience}
-                    className="bg-white border-2 rounded border-black"
-                    {...register(`experience[${index}].experience`)}
-                  />
-                  
-                  </div>
-                  <br/>
-                </>
-                  ))}
+              </div>
+              <br />
+              <div className="flex flex-col ">
+                {fields.map((item, index) => (
+                  <>
+                    {console.log("fields==>", fields)}
+                    <div key={item.id} className="flex justify-end">
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className="cursor-pointer me-4"
+                        onClick={() => remove(index)}
+                      />
+                      <input
+                        name={`experience[${index}].experience`}
+                        type="text"
+                        //  defaultValue={item.experience}
+                        className="bg-white border-2 rounded border-black"
+                        {...register(`experience[${index}].experience`)}
+                      />
+                    </div>
+                    <br />
+                  </>
+                ))}
               </div>
             </div>
-            <br/><br/>
+            <br />
+            <br />
             {errors.experience && (
               <div className="bg-white flex mt-3 text-red-500 justify-end">
                 {errors.experience.message}
@@ -279,7 +315,6 @@ const onError = (errors) => {
               type="submit"
               className="bg-sky-200 px-5 py-2 rounded "
               disabled={!isDirty}
-              onClick={notifyUpdate}
             >
               UPDATE
             </button>
