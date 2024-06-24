@@ -120,7 +120,7 @@ export default function CreateUser() {
                 id="name"
                 name="name"
                 type="text"
-                className=" bg-white border-2 rounded border-black"
+                className=" bg-white border-2 rounded border-black ps-2"
                 {...register("name", {
                   required: "name is required",
                 })}
@@ -141,7 +141,7 @@ export default function CreateUser() {
                 id="username"
                 name="username"
                 type="text"
-                className="bg-white border-2 rounded border-black"
+                className="bg-white border-2 rounded border-black ps-2"
                 {...register("username", {
                   required: true,
                   minLength: 4,
@@ -164,7 +164,7 @@ export default function CreateUser() {
                 id="address"
                 name="address"
                 type="text"
-                className="bg-white border-2 rounded border-black"
+                className="bg-white border-2 rounded border-black ps-2"
                 {...register("address", {
                   required: "Address is reqquired",
                 })}
@@ -203,7 +203,7 @@ export default function CreateUser() {
                         name={`experience[${index}].experience`}
                         type="text"
                         defaultValue={item.experience}
-                        className="bg-white border-2 rounded border-black"
+                        className="bg-white border-2 rounded border-black ps-2"
                         {...register(`experience[${index}].experience`)}
                       />
                     </div>

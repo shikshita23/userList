@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 import Update from "./components/home/Update";
 import Home from "./components/home";
 import { QueryClient, QueryClientProvider } from 'react-query';
+import Login from "./login/Login";
 function App() {
   const  queryClient = new QueryClient();
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/view" element={<Home/>}></Route>
         <Route path="/edit/:id" element={<Update/>}></Route>
         <Route path="/" element={<Layout/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
       </Routes>
     </QueryClientProvider>
   );

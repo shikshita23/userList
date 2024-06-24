@@ -281,7 +281,7 @@ export default function Update() {
                         name={`experience[${index}].experience`}
                         type="text"
                         //  defaultValue={item.experience}
-                        className="bg-white border-2 rounded border-black"
+                        className="bg-white border-2 rounded border-black ps-2"
                         {...register(`experience[${index}].experience`)}
                       />
                     </div>
