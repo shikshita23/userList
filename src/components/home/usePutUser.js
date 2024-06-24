@@ -1,9 +1,8 @@
 import { useMutation } from "react-query";
 import axiosNoAuth from "../../axios/axios";
-export const usePutUser = (id, data) => {
-  const putUser = async () => {
+export const usePutUser = (onSuccess) => {
+  const updateUserFn = async ({ id, data }) => {
     try {
-      console.log("finalFormdata", data);
       const res = await axiosNoAuth.put(`/user/${id}`, data);
       if (res) {
         console.log("res>>>", res);
@@ -13,7 +12,9 @@ export const usePutUser = (id, data) => {
       console.log("Error while updating data", error);
     }
   };
-  const mutation = useMutation(putUser);
+  const mutation = useMutation(updateUserFn, {
+    onSuccess,
+  });
   return {
     mutation,
   };

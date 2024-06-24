@@ -1,22 +1,19 @@
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useQuery } from "react-query";
+import axiosNoAuth from "../../axios/axios";
 
 import Nav from "../navbar/Nav";
 import { usePutUser } from "../home/usePutUser";
-import { useGetSingleUser } from "./useGetSingleUser";
-import { useQuery } from "react-query";
-import axiosNoAuth from "../../axios/axios";
-import { useMutation } from "react-query";
 
 export default function Update() {
   const [userData, setUserData] = useState(null);
   const { id } = useParams();
-  console.log("idFr", id);
   const {
     control,
     register,
@@ -40,7 +37,7 @@ export default function Update() {
       theme: "light",
     });
   };
-  const navigate = useNavigate();
+
   // const onSubmit = (data) => {
   //   console.log("data==>", data);
   //   fetch(` http://localhost:8000/user/${id}`, {
@@ -107,7 +104,6 @@ export default function Update() {
   //     fetchData();
   //   },[id,setValue])
 
-  const { mutation } = usePutUser();
   const getSingleUser = async (id) => {
     try {
       const res = await axiosNoAuth.get(`/user/${id}`);
@@ -117,12 +113,8 @@ export default function Update() {
       throw new Error("Failed to fetch user data");
     }
   };
-  const {
-    data: user,
-    error: singleUserError,
-    isLoading: isLoadigSingleUser,
-  } = useQuery(["users", id], () => getSingleUser(id), {
-    select: (data) => data,
+  const { data: user } = useQuery(["users", id], () => getSingleUser(id), {
+    select: (user) => user,
   });
 
   console.log("userNew", user);
@@ -137,27 +129,32 @@ export default function Update() {
     }
   }, [user, setValue, id]);
 
-  const updateUserFn = async (data) => {
-    try {
-      const res = await axiosNoAuth.put(`/user/${id}`, data);
-      if (res) {
-        console.log("res>>>", res);
-        console.log("Successfully Updated");
-      }
-    } catch (error) {
-      console.log("Error while updating data", error);
-    }
-  };
+  // const updateUserFn = async (data) => {
+  //   try {
+  //     const res = await axiosNoAuth.put(`/user/${id}`, data);
+  //     if (res) {
+  //       console.log("res>>>", res);
+  //       console.log("Successfully Updated");
+  //     }
+  //   } catch (error) {
+  //     console.log("Error while updating data", error);
+  //   }
+  // };
 
-  const editMutation = useMutation(updateUserFn, {
-    onSuccess: () => {
-      notifyUpdate();
-    },
-    onError: (error) => {},
-  });
+  // const editMutation = useMutation(updateUserFn, {
+  //   onSuccess: () => {
+  //     notifyUpdate();
+  //   },
+  //   onError: (error) => {},
+  // });
+
+  const onSuccess = () => {
+    notifyUpdate();
+  };
+  const { mutation } = usePutUser(onSuccess);
 
   const onSubmit = async (data) => {
-    editMutation.mutate({ id: id, ...data });
+    mutation.mutate({ id, data });
   };
 
   // const fetchSingleData = async () => {
@@ -170,15 +167,6 @@ export default function Update() {
   //       throw new Error('Failed to fetch user data');
   //     }
   // };
-
-  useEffect(() => {
-    if (userData) {
-      setValue("name", userData.name);
-      setValue("username", userData.username);
-      setValue("address", userData.address);
-      setValue("experience", userData.experience);
-    }
-  }, [userData, setValue]);
 
   console.log("user Data outside the useEffect", userData);
   const onError = (errors) => {

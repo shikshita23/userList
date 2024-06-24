@@ -72,17 +72,8 @@ export default function Home() {
   //   }
   // }
 
-  const { data, error, isLoading,refetch: refetchUsers} = useGetUsers();
-  console.log("data from reactQuery==>",data)
-  const {mutation,isSuccess} = useDeleteUser();
-  useEffect(()=>{
-    if(mutation?.isSuccess === true){
-      refetchUsers()
-    }
-  },[mutation?.isSuccess])
- 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  const { data, error, isLoading, refetch: refetchUsers } = useGetUsers();
+  console.log("data from reactQuery==>", data);
   const notifyDel = () => {
     toast.success("User Deleted", {
       position: "top-right",
@@ -94,11 +85,20 @@ export default function Home() {
       progress: undefined,
       theme: "light",
     });
-  }; 
-  if(isSuccess){
+  };
+  const onSuccess = () => {
     notifyDel();
-  }
-  
+  };
+  const { mutation,  } = useDeleteUser(onSuccess);
+  useEffect(() => {
+    if (mutation?.isSuccess === true) {
+      refetchUsers();
+    }
+  }, [mutation?.isSuccess]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <>
       <Nav />
@@ -138,9 +138,7 @@ export default function Home() {
                 <FontAwesomeIcon
                   icon={faTrash}
                   className="cursor-pointer"
-                  onClick={() => 
-                    mutation.mutate({ id: user.id })
-                  }
+                  onClick={() => mutation.mutate({ id: user.id })}
                   // {() => handleDelete(user.id)}
                 />
               </div>

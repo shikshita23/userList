@@ -1,23 +1,23 @@
 import { useMutation } from "react-query";
 import axiosNoAuth from "../../axios/axios";
-export const useDeleteUser = () => {
+export const useDeleteUser = (onSuccess) => {
+  const deleteUser = async ({ id }) => {
+    try {
+      const res = await axiosNoAuth.delete(`/user/${id}`);
+      console.log("data after deletion =>", res);
+      if (res) {
+        console.log("Deleted successfully", id);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const deleteUser =async ({id})=>{
-      try{
-            const res=await axiosNoAuth.delete(`/user/${id}`);
-            console.log("data after deletion =>",res);
-            if(res){
-              console.log("Deleted successfully", id);
-            }
-          }
-          catch(error){
-            console.error(error);
-          }
-      };
+  const mutation = useMutation(deleteUser, {
+    onSuccess,
+  });
 
-    const mutation = useMutation(deleteUser)
-
-    return {
-      mutation,
-          }
-}
+  return {
+    mutation,
+  };
+};

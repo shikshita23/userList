@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import axiosNoAuth from "../../axios/axios";
-export const useGetSingleUser = () => {
+export const useGetSingleUser = (id) => {
   const getSingleUser = async (id) => {
     try {
       const res = await axiosNoAuth.get(`/user/${id}`);
@@ -10,12 +10,12 @@ export const useGetSingleUser = () => {
       throw new Error("Failed to fetch user data");
     }
   };
-  const { data, refetch } = useQuery({
-    queryKey: ["singleUser"],
-    queryFn: getSingleUser,
+  const { data } = useQuery({
+    queryKey: ["users", id],
+    queryFn: getSingleUser(id),
+    select: (data) => data,
   });
   return {
     data,
-    refetch,
   };
 };
