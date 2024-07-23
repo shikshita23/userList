@@ -1,8 +1,8 @@
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import { usePostUser } from "./usePostUser";
@@ -16,10 +16,10 @@ export default function CreateUser() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm();
-  const { append, fields, remove } = useFieldArray({
-    control,
-    name: "experience",
-  });
+  // const { append, fields, remove } = useFieldArray({
+  //   control,
+  //   name: "experience",
+  // });
   const notifyCreate = (msg) => {
     toast.success(msg, {
       position: "top-right",
@@ -38,7 +38,7 @@ export default function CreateUser() {
   const onSuccess = () => {
     notifyCreate("Created Successfully");
     setTimeout(() => {
-      navigate("/view");
+      navigate("/show");
     }, 3500);
   };
 
@@ -115,14 +115,14 @@ export default function CreateUser() {
         >
           <div className="flex flex-col bg-white">
             <div className="flex justify-between bg-white">
-              <label className="bg-white">Name:</label>
+              <label className="bg-white">project Name:</label>
               <input
-                id="name"
-                name="name"
+                id="project_name"
+                name="project_name"
                 type="text"
                 className=" bg-white border-2 rounded border-black ps-2"
-                {...register("name", {
-                  required: "name is required",
+                {...register("project_name", {
+                  required: "project_name is required",
                 })}
               />
             </div>
@@ -134,51 +134,29 @@ export default function CreateUser() {
           </div>
           <br />
           <br />
-          <div className="flex flex-col justify-between bg-white ">
+          <div className="flex flex-col  bg-white">
             <div className="flex justify-between bg-white">
-              <label className="bg-white">Username</label>
+              <label className="bg-white">Description</label>
               <input
-                id="username"
-                name="username"
+                id="project_description"
+                name="project_description"
                 type="text"
                 className="bg-white border-2 rounded border-black ps-2"
-                {...register("username", {
-                  required: true,
-                  minLength: 4,
+                {...register("project_description", {
+                  required: "description is reqquired",
                 })}
               />
             </div>
 
-            <div className="bg-white flex mt-3 text-red-500 justify-end">
-              {errors.username?.type === "required" && "username is required"}
-              {errors.username?.type === "minLength" &&
-                "username must have more than 4 characters"}
-            </div>
-          </div>
-          <br />
-          <br />
-          <div className="flex flex-col  bg-white">
-            <div className="flex justify-between bg-white">
-              <label className="bg-white">Address</label>
-              <input
-                id="address"
-                name="address"
-                type="text"
-                className="bg-white border-2 rounded border-black ps-2"
-                {...register("address", {
-                  required: "Address is reqquired",
-                })}
-              />
-            </div>
-            {errors.address && (
+            {errors.description && (
               <div className="bg-white flex mt-3 text-red-500 justify-end">
-                {errors.address.message}
+                {errors.description.message}
               </div>
             )}
           </div>
           <br />
           <br />
-          <div className="flex flex-col justify-between bg-white">
+          {/* <div className="flex flex-col justify-between bg-white">
             <div className="flex flex-col bg-white">
               <div className="flex justify-between">
                 <label className="bg-white">Experience</label>
@@ -219,7 +197,32 @@ export default function CreateUser() {
                 {errors.experience.message}
               </div>
             )}
+          </div> */}
+
+          <div className="flex flex-col justify-between bg-white ">
+            <div className="flex justify-between bg-white">
+              <label className="bg-white">Owner Id:</label>
+              <input
+                id=" owner_id"
+                name=" owner_id"
+                type="number"
+                className="bg-white border-2 rounded border-black ps-2"
+                {...register("owner_id", {
+                  required: true,
+                  // minLength: 3,
+                })}
+              />
+            </div>
+
+            <div className="bg-white flex mt-3 text-red-500 justify-end">
+              {errors.owner_id && (
+                <div className="bg-white flex mt-3 text-red-500 justify-end">
+                  {errors.owner_id.message}
+                </div>
+              )}
+            </div>
           </div>
+
           <div className="bg-white mt-10  flex justify-center">
             <button
               type="submit"

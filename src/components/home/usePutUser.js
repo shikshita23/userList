@@ -3,7 +3,8 @@ import axiosNoAuth from "../../axios/axios";
 export const usePutUser = (onSuccess) => {
   const updateUserFn = async ({ id, data }) => {
     try {
-      const res = await axiosNoAuth.put(`/user/${id}`, data);
+      const res = await axiosNoAuth.put(`/update/${id}`, data);
+      console.log("response from update",res);
       if (res) {
         console.log("res>>>", res);
         console.log("Successfully Updated");
